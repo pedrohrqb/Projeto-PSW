@@ -52,5 +52,7 @@ def logar(request):
         if user:
             auth.login(request, user)
             return redirect('/empresarios/cadastrar_empresa')
-        
-        return HttpResponse('reste')
+        messages.add_message(request, constants.ERROR, 'Usuário ou Senha inválidos.')
+        return redirect('/usuarios/logar')
+    
+    

@@ -7,7 +7,10 @@
 {% endblock 'head' %}
 
 
+
 {% block 'body' %}
+
+{% include 'partials/barra_navegacao.html' %}
 
     <div class="container">
         <br>
@@ -22,12 +25,13 @@
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="" method="">
+                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
                 <label>Nome</label>
                 <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
                 <br>
                 <label>Cnpj</label>
-                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ ..." class="form-control">
+                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ ..." class="form-control" minlength="14" maxlength="14" >
                 <br>
                 <label>Site</label>
                 <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">

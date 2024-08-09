@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 def cadastrar_empresa(request):
+    # Caso o usuários não esteja logado, ao tentar acessar a página pela url, ele será redirecionado para página de login.
+    if not request.user.is_authenticated:
+        return redirect('/usuarios/logar/')
+
     if request.method == 'GET':
         return render(request, 'cadastrar_empresa.html', {'tempo_existencia': Empresas.tempo_existencia_choices, 'areas': Empresas.area_choices})
     elif request.method == "POST":
@@ -49,3 +53,12 @@ def cadastrar_empresa(request):
         
         messages.add_message(request, constants.SUCCESS, 'Empresa criada com sucesso')
         return redirect('/empresarios/cadastrar_empresa')
+
+def listar_empresas(request):
+    # Caso o usuários não esteja logado, ao tentar acessar a página pela url, ele será redirecionado para página de login.
+    if not request.user.is_authenticated:
+        return redirect('/usuarios/logar/')
+    if request.method == 'GET':
+        # TODO: Realizar os filtros das empresas.
+        empresas = Empresas.objects.filter(user=request.user)
+        return render(request, 'listar_empresas.html', context={'empresas': empresas})

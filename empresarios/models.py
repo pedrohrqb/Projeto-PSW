@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
+from django.utils.safestring import mark_safe
 
 class Empresas(models.Model):
     tempo_existencia_choices = (
@@ -38,3 +40,11 @@ class Empresas(models.Model):
 
     def __str__(self):
         return f'{self.user.username} | {self.nome}'
+    
+    @property
+    def status(self):
+        if date.today() > self.data_final_captacao:
+            # O "mark_safe", diz ao django que a url do bootstrap é segura, assim importando o css.
+            return mark_safe('<span class="badge text-bg-success">Captação Realizada</span>')
+        else:
+            return mark_safe('<span class="badge text-bg-primary">Em Captação</span>')

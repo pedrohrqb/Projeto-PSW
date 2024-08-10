@@ -62,3 +62,8 @@ def listar_empresas(request):
         # TODO: Realizar os filtros das empresas.
         empresas = Empresas.objects.filter(user=request.user)
         return render(request, 'listar_empresas.html', context={'empresas': empresas})
+    
+def empresa(request, id):
+    empresa = Empresas.objects.get(id=id)
+    if request.method == "GET":
+        return render(request, 'empresa.html', {'empresa': empresa})
